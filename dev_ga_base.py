@@ -92,7 +92,10 @@ class Phenotype:
         fail_score = -1
         punish_score = -1 
         
-        chromosome = self.decode()
+        original = self.decode()
+        chromosome = []
+        for x in range(len(original)):
+            chromosome.extend(original[x])
         
 # 1. Hay 5 casas.
 # 2. El Matematico vive en la casa roja.
@@ -246,13 +249,20 @@ class Riddle:
                 self.population[i].fitness_function()
                 pass
             self.population.sort(key=lambda x: x.score, reverse=True)
+            print(f" soy el mejor {self.population[0].score}")
+            
+            if(self.population[0].score >= 14):
+                break
 
             # crossover
             N = 200
             limit = 2000
             while(len(newGeneration) < limit):
                 for s in range(0, N, 2):
-                    newGeneration.append(self.crossOver(self.population[s], self.population[s+1]))
+                    padre1 = self.population[s].chromosome
+                    padre2 = self.population[s+1].chromosome
+                    nuevo = self.crossOver(progenitor_1 = padre1, progenitor_2 = padre2)
+                    newGeneration.append(nuevo)
                     pass
                 print(f"nueva generacion: {newGeneration}")
                 pass
@@ -264,11 +274,11 @@ class Riddle:
             
 
             # condicion de corte
+            N2 = 100
             if counter > N2 :
                 print("programame")
                 pass
                 break_condition = True
-
 
             counter += 1
 
@@ -288,14 +298,13 @@ class Riddle:
     '''
     def mutate(self, crossed, prob=0.5):
         prob = prob * 100
-        for y in range(enumerate(crossed)):
+        for y in range(len(crossed)):
             x = random.randint(0,100)
-            gen = random.randint(0,4)
             if(x > prob):
-                if (crossed[y*5+gen] == 1):
+                if (crossed[y] == 1):
                     crossed[y] = 0
                 else:
-                    crossed[y*5+gen] = 1
+                    crossed[y] = 1
                     pass
                 pass
             pass
