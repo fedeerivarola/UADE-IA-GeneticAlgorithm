@@ -69,12 +69,18 @@ class Phenotype:
     def encode(self):
         pass
 
+    def setChromosoma(self, chromosoma):
+        self.chromosome.clear()
+        self.chromosome = chromosoma
+        pass
 
     def mutate(self):
         ''' muta un fenotipo, optimizado'''
-        x  = random.randint(0,4)
-        self.chromosome
-        print("programame")
+        x  = random.randint(0,25)
+        if (self.chromosome[x] == 0):
+            self.chromosome[x] = 1
+        else:
+            self.chromosome[x] = 0
         pass
 
     def fitness_function(self):
@@ -188,10 +194,11 @@ class Phenotype:
             else:
                 self.score += fail_score
             
-        for x in range(25):
+        for x in range(0, len(chromosome)):
             j = chromosome.count(chromosome[x])
             if j > 1:
                 self.score += fail_score 
+            pass
         pass
 
 class Riddle:
@@ -298,25 +305,27 @@ class Riddle:
     operacion: cruazamiento. Intercambio de razos fenotipicos entre individuos
     '''
     def crossOver(self, progenitor_1, progenitor_2):
-        print("papa 1" + progenitor_1)
-        print("papa 2" + progenitor_2)
-        hijo = Phenotype()
-        hijo.chromosome.clear()
+        print(f"papa 1 {progenitor_1}")
+        print(f"papa 2 {progenitor_2}")
+        hijo = Phenotype ()
+        hijoChromo = []
         i = random.randint(0,1)
 
         if i == 0:
             for x in range(12):
-                hijo.chromosome.extend(progenitor_1[x])
+                hijoChromo.extend(progenitor_1[x])
             for x in range(13, 25):
-                hijo.chromosome.extend(progenitor_2[x])
+                hijoChromo.extend(progenitor_2[x])
 
         elif i == 1:
             for x in range(12):
-                hijo.chromosome.extend(progenitor_2[x])
+                hijoChromo.extend(progenitor_2[x])
                 
             for x in range(13, 25):
-                hijo.chromosome.extend(progenitor_1[x])
+                hijoChromo.extend(progenitor_1[x])
         
+        hijo.setChromosoma(hijoChromo)
+
         return hijo
 
 start = time.time()
