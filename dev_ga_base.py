@@ -86,7 +86,7 @@ class Phenotype:
     def fitness_function(self):
         ''' calcula el valor de fitness del cromosoma segun el problema en particular '''
 
-        self.score = 0
+        self.score = 20
 
         ok_score = 1
         fail_score = -1
@@ -99,103 +99,131 @@ class Phenotype:
         
 # 1. Hay 5 casas.
 # 2. El Matematico vive en la casa roja.
-        if(chromosome.count('Mathematician') == 1):
+        try:
             i = chromosome.index('Mathematician')
             if chromosome[i-1] == 'red':
                 self.score += ok_score
             else:
-                self.score += fail_score 
+                self.score += fail_score
+        except:
+            self.score += fail_score
 # 3. El hacker programa en Python.
-        if(chromosome.count('Hacker') == 1):
+        try:
             i = chromosome.index('Hacker')
             if chromosome[i+1] == 'Python':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 4. El Brackets es utilizado en la casa verde.
-        if(chromosome.count('Brackets') == 1):
+        try:
             i = chromosome.index('Brackets')
             if chromosome[i-4] == 'green':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 5. El analista usa Atom.
-        if(chromosome.count('Analyst') == 1):
+        try:
             i = chromosome.index('Analyst')
             if chromosome[i+3] == 'Atom':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 6. La casa verde esta a la derecha de la casa blanca.
-        if(chromosome.count('green') == 1):
+        try:
             i = chromosome.index('green')
             if chromosome[i-5] == 'white':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 7. La persona que usa Redis programa en Java
-        if(chromosome.count('Redis') == 1):
+        try:
             i = chromosome.index('Redis')
             if chromosome[i-1] == 'Java':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 8. Cassandra es utilizado en la casa amarilla
-        if(chromosome.count('Cassandra') == 1):
+        try:
             i = chromosome.index('Cassandra')
             if chromosome[i-3] == 'yellow':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 9. Notepad++ es usado en la casa del medio.
-        if(chromosome.count('Notepad++') == 1):
+        try:
             i = chromosome.index('Notepad++')
             if 9 < i and i < 15:
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 10. El Desarrollador vive en la primer casa.
-        if(chromosome.count('Developer') == 1):
+        try:
             i = chromosome.index('Developer')
             if i < 5:
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 11. La persona que usa HBase vive al lado de la que programa en JavaScript.
-        if(chromosome.count('HBase') == 1):
+        try:
             i = chromosome.index('HBase')
             if chromosome[i-1] == 'Javascript':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 12. La persona que usa Cassandra es vecina de la que programa en C#.
-        if(chromosome.count('Cassandra') == 1):
+        try:
             i = chromosome.index('Cassandra')
             if chromosome[i-1] == 'C#':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 13. La persona que usa Neo4J usa Sublime Text.
-        if(chromosome.count('Neo4J') == 1):
+        try:
             i = chromosome.index('Neo4J')
             if chromosome[i+1] == 'Sublime Text':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 14. El Ingeniero usa MongoDB.
-        if(chromosome.count('Engineer') == 1):
+        try:
             i = chromosome.index('Engineer')
             if chromosome[i+2] == 'MongoDB':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
 # 15. EL desarrollador vive en la casa azul.
-        if(chromosome.count('Developer') == 1):
+        try:
             i = chromosome.index('Developer')
             if chromosome[i-1] == 'blue':
                 self.score += ok_score
             else:
                 self.score += fail_score
+        except:
+            self.score += fail_score
             
         for x in range(0, len(chromosome)):
             j = chromosome.count(chromosome[x])
@@ -274,7 +302,7 @@ class Riddle:
             
 
             # condicion de corte
-            N2 = 100
+            N2 = 1000
             if counter > N2 :
                 print("programame")
                 pass
