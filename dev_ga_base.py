@@ -76,17 +76,23 @@ class Phenotype:
 
     def mutate(self):
         ''' muta un fenotipo, optimizado'''
-        x  = random.randint(0,25)
-        if (self.chromosome[x] == 0):
-            self.chromosome[x] = 1
-        else:
-            self.chromosome[x] = 0
+        x  = random.randint(0,24)
+        if (self.chromosome[x] == '001'):
+            self.chromosome[x] = '100'
+        elif self.chromosome[x] == '010':
+            self.chromosome[x] = '011'
+        elif self.chromosome[x] == '011':
+            self.chromosome[x] = '001'
+        elif self.chromosome[x] == '100':
+            self.chromosome[x] = '101'
+        elif self.chromosome[x] == '101':
+            self.chromosome[x] = '010'
         pass
 
     def fitness_function(self):
         ''' calcula el valor de fitness del cromosoma segun el problema en particular '''
 
-        self.score = 20
+        self.score = 0
 
         ok_score = 1
         fail_score = -1
@@ -263,7 +269,7 @@ class Riddle:
         break_condition = False
 
         crossover_prop = 0.80
-        newGeneration = []
+
         while not(break_condition):
             
             if counter % 100 == 0:
@@ -279,12 +285,14 @@ class Riddle:
             self.population.sort(key=lambda x: x.score, reverse=True)
             print(f" soy el mejor {self.population[0].score}")
             
+            #condicion de corte porque encontre al mejor
             if(self.population[0].score >= 14):
                 break
 
             # crossover
             N = 200
             limit = 2000
+            newGeneration = []
             while(len(newGeneration) < limit):
                 for s in range(0, N, 2):
                     padre1 = self.population[s].chromosome
@@ -292,17 +300,19 @@ class Riddle:
                     nuevo = self.crossOver(progenitor_1 = padre1, progenitor_2 = padre2)
                     newGeneration.append(nuevo)
                     pass
-                print(f"nueva generacion: {newGeneration}")
                 pass
             
             # mutate
             newGenerationMutado = []
             newGenerationMutado.append(self.mutate(newGeneration))
-            print(newGenerationMutado)
-            
 
-            # condicion de corte
-            N2 = 1000
+            print(f"generacion anterior: {self.population}")
+            self.population.clear()
+            self.population = newGenerationMutado[0]
+            print(f"nueva generacion: {self.population}")
+
+            # condicion de corte por cantidad
+            N2 = 10
             if counter > N2 :
                 print("programame")
                 pass
@@ -329,11 +339,7 @@ class Riddle:
         for y in range(len(crossed)):
             x = random.randint(0,100)
             if(x > prob):
-                if (crossed[y] == 1):
-                    crossed[y] = 0
-                else:
-                    crossed[y] = 1
-                    pass
+                crossed[y].mutate()
                 pass
             pass
         return crossed
@@ -350,16 +356,16 @@ class Riddle:
 
         if i == 0:
             for x in range(12):
-                hijoChromo.extend(progenitor_1[x])
-            for x in range(13, 25):
-                hijoChromo.extend(progenitor_2[x])
+                hijoChromo.append(progenitor_1[x])
+            for y in range(12, 25):
+                hijoChromo.append(progenitor_2[y])
 
         elif i == 1:
             for x in range(12):
-                hijoChromo.extend(progenitor_2[x])
+                hijoChromo.append(progenitor_2[x])
                 
-            for x in range(13, 25):
-                hijoChromo.extend(progenitor_1[x])
+            for y in range(12, 25):
+                hijoChromo.append(progenitor_1[y])
         
         hijo.setChromosoma(hijoChromo)
 
