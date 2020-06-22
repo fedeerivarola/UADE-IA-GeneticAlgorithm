@@ -287,7 +287,10 @@ class Riddle:
             
             #condicion de corte porque encontre al mejor
             if(self.population[0].score >= 14):
-                break
+                break_condition = True
+            #condicion de corte porque la poblacion es pesima
+            if(self.population[0].score <= 0):
+                break_condition = True
 
             # crossover
             N = 200
@@ -312,7 +315,7 @@ class Riddle:
             print(f"nueva generacion: {self.population}")
 
             # condicion de corte por cantidad
-            N2 = 10
+            N2 = 100
             if counter > N2 :
                 print("programame")
                 pass
